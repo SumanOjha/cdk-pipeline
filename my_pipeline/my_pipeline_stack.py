@@ -19,7 +19,7 @@ class MyPipelineStack(cdk.Stack):
         pipeline =  CodePipeline(self, "Pipeline", 
                         pipeline_name="MyPipeline",
                         synth=ShellStep("Synth", 
-                            input=CodePipelineSource.git_hub("SumanOjha/cdk-pipeline.git", "master", authentication=core.SecretValue.secrets_manager('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')),
+                            input=CodePipelineSource.git_hub("SumanOjha/cdk-pipeline.git", "master", authentication=core.SecretValue.secrets_manager('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')),
                             commands=["npm ci", "npm run build", "npx cdk synth"]
                         )
                     )
