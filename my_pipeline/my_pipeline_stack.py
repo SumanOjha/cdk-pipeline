@@ -2,6 +2,7 @@ from aws_cdk import core as cdk
 from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
 
 
+
 # For consistency with other languages, `cdk` is the preferred import name for
 # the CDK's core module.  The following line also imports it as `core` for use
 # with examples from the CDK Developer's Guide, which are in the process of
@@ -18,7 +19,7 @@ class MyPipelineStack(cdk.Stack):
         pipeline =  CodePipeline(self, "Pipeline", 
                         pipeline_name="MyPipeline",
                         synth=ShellStep("Synth", 
-                            input=CodePipelineSource.git_hub("SumanOjha/cdk-pipeline.git", "master"),
+                            input=CodePipelineSource.git_hub("SumanOjha/cdk-pipeline.git", "master", authentication=core.SecretValue.secrets_manager('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')),
                             commands=["npm ci", "npm run build", "npx cdk synth"]
                         )
                     )
