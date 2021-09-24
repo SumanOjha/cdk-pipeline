@@ -1,5 +1,8 @@
 from aws_cdk import core as cdk
 from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
+import boto3
+import base64
+from botocore.exceptions import ClientError
 
 
 
@@ -16,10 +19,30 @@ class MyPipelineStack(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # The code that defines your stack goes here
+
+        secret_name = "github-token3"
+        region_name = "ap-southeast-2"
+
+        # Create a Secrets Manager client
+        session = boto3.session.Session()
+        client = session.client(
+            service_name='secretsmanager',
+            region_name=region_name
+        )
+
+        get_secret_value_response = client.get_secret_value(SecretId=secret_name)
+        # Decrypts secret using the associated KMS CMK.
+        # Depending on whether the secret is a string or binary, one of these fields will be populated.
+        if 'SecretString' in get_secret_value_response:
+            secret = get_secret_value_response['SecretString']
+        else:
+            decoded_binary_secret = base64.b64decode(get_secret_value_response['SecretBinary'])
+
+
         pipeline =  CodePipeline(self, "Pipeline", 
                         pipeline_name="MyPipeline",
                         synth=ShellStep("Synth", 
-                            input=CodePipelineSource.git_hub("SumanOjha/cdk-pipeline.git", "master", authentication=core.SecretValue.secrets_manager('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')),
+                            input=CodePipelineSource.git_hub("SumanOjha/cdk-pipeline.git", "master", authentication=core.SecretValue.secrets_manager(secret)),
                             commands=["npm ci", "npm run build", "npx cdk synth"]
                         )
                     )
