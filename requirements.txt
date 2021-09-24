@@ -1,0 +1,2 @@
+-e .
+python -m pip freeze | grep -v '^[-#]'
