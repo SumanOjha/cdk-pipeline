@@ -20,7 +20,7 @@ class MyPipelineStack(cdk.Stack):
 
         # The code that defines your stack goes here
 
-        secret_name = "github-token3"
+        secret_name = "github-token4"
         region_name = "ap-southeast-2"
 
         # Create a Secrets Manager client
