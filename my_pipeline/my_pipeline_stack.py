@@ -12,6 +12,8 @@ from botocore.exceptions import ClientError
 # being updated to use `cdk`.  You may delete this import if you don't need it.
 from aws_cdk import core
 
+from my_pipeline.my_pipeline_app_stage import MyPipelineAppStage
+
 
 class MyPipelineStack(cdk.Stack):
 
@@ -39,10 +41,18 @@ class MyPipelineStack(cdk.Stack):
             decoded_binary_secret = base64.b64decode(get_secret_value_response['SecretBinary'])
 
 
+        source = CodePipelineSource.git_hub("SumanOjha/cdk-pipeline", "master", authentication=core.SecretValue.plain_text(secret))
         pipeline =  CodePipeline(self, "Pipeline", 
                         pipeline_name="MyPipeline",
                         synth=ShellStep("Synth", 
-                            input=CodePipelineSource.git_hub("SumanOjha/cdk-pipeline", "master", authentication=core.SecretValue.plain_text(secret)),
+                            input=source,
                             commands=["npm ci", "npm run build", "npx cdk synth"]
                         )
                     )
+        stage = pipeline.add_stage(
+                        MyPipelineAppStage(self, "test",
+                            env = cdk.Environment(account="357568851775", region="ap-southeast-2"))
+                )
+        stage.add_post(ShellStep('validate',
+                            input=source,
+                            commands=['curl -Ssf https://my.webservice.com/']))   
