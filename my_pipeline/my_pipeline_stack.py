@@ -57,3 +57,4 @@ class MyPipelineStack(cdk.Stack):
         stage.add_post(ShellStep('validate',
                             input=source,
                             commands=['curl -Ssf https://my.webservice.com/']))   
+        # This is a change
