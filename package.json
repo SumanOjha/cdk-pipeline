@@ -1,0 +1,19 @@
+{
+  "name": "my-pipeline",
+  "version": "1.0.0",
+  "description": "This is a blank project for Python development with CDK.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SumanOjha/cdk-pipeline.git"
+  },
+  "author": "Suman Ojha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SumanOjha/cdk-pipeline/issues"
+  },
+  "homepage": "https://github.com/SumanOjha/cdk-pipeline#readme"
+}
