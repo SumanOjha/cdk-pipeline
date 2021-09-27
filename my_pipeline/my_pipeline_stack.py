@@ -51,7 +51,8 @@ class MyPipelineStack(cdk.Stack):
                     )
         stage = pipeline.add_stage(
                         MyPipelineAppStage(self, "test",
-                            env = cdk.Environment(account="357568851775", region="ap-southeast-2"))
+                            # env = cdk.Environment(account="357568851775", region="ap-southeast-2"))
+                            env = kwargs['env'])
                 )
         stage.add_post(ShellStep('validate',
                             input=source,
