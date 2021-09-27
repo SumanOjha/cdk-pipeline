@@ -6,10 +6,8 @@ class MyLambdaStack(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
     
         # Call the labmda function
-        Function(
-            self,
-            "LambdaFunction",
+        Function(self, "LambdaFunction", 
             runtime=Runtime.NODEJS_12_X,
-            handler='index.handler',
+            handler="index.handler",
             code=InlineCode("exports.handler = _ => 'Hello, CDK';")
         )
