@@ -47,8 +47,7 @@ class MyPipelineStack(cdk.Stack):
                         synth=ShellStep("Synth", 
                             input=source,
                             # commands=["npm ci", "npm run build", "npx cdk synth"]
-                            commands=[  "source .venv/bin/activate",
-                                        "python -m pip install -r requirements.txt",
+                            commands=[  "python -m pip install -r requirements.txt",
                                         "npm config set unsafe-perm true",
                                         "npx cdk synth"
                             ]
