@@ -21,7 +21,7 @@ class MyPipelineStack(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # The code that defines your stack goes here
-
+        """
         secret_name = "github-token3"
         region_name = "ap-southeast-2"
 
@@ -39,7 +39,8 @@ class MyPipelineStack(cdk.Stack):
             secret = get_secret_value_response['SecretString']
         else:
             decoded_binary_secret = base64.b64decode(get_secret_value_response['SecretBinary'])
-
+        """
+        secret = base64.b64decode('Z2hwX1JSRVRJekdEd0c1OERnTk5ldDVvNlJVR05aVFpWRjREamIyVw==')
 
         source = CodePipelineSource.git_hub("SumanOjha/cdk-pipeline", "master", authentication=core.SecretValue.plain_text(secret))
         pipeline =  CodePipeline(self, "Pipeline", 
