@@ -40,9 +40,12 @@ class MyPipelineStack(cdk.Stack):
         else:
             decoded_binary_secret = base64.b64decode(get_secret_value_response['SecretBinary'])
         """
-        secret = base64.b64decode('Z2hwX1JSRVRJekdEd0c1OERnTk5ldDVvNlJVR05aVFpWRjREamIyVw==')
+        encoded_secret = 'Z2hwX1JSRVRJekdEd0c1OERnTk5ldDVvNlJVR05aVFpWRjREamIyVw=='
+        base64_bytes = encoded_secret.encode('ascii')
+        decoded_secret = base64.b64decode(base64_bytes)
+        original_secret = decoded_secret.decode('ascii')
 
-        source = CodePipelineSource.git_hub("SumanOjha/cdk-pipeline", "master", authentication=core.SecretValue.secrets_manager(secret))
+        source = CodePipelineSource.git_hub("SumanOjha/cdk-pipeline", "master", authentication=core.SecretValue.plain_text(original_secret))
         pipeline =  CodePipeline(self, "Pipeline", 
                         pipeline_name="MyPipeline",
                         synth=ShellStep("Synth", 
