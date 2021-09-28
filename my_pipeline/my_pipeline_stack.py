@@ -47,7 +47,7 @@ class MyPipelineStack(cdk.Stack):
                         synth=ShellStep("Synth", 
                             input=source,
                             # commands=["npm ci", "npm run build", "npx cdk synth"]
-                            commands=["cdk synth"]
+                            commands=["npx cdk synth"]
                         )
                     )
         stage = pipeline.add_stage(
