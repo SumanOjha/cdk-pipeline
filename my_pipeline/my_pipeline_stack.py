@@ -42,7 +42,7 @@ class MyPipelineStack(cdk.Stack):
         """
         secret = base64.b64decode('Z2hwX1JSRVRJekdEd0c1OERnTk5ldDVvNlJVR05aVFpWRjREamIyVw==')
 
-        source = CodePipelineSource.git_hub("SumanOjha/cdk-pipeline", "master", authentication=core.SecretValue.plain_text(secret))
+        source = CodePipelineSource.git_hub("SumanOjha/cdk-pipeline", "master", authentication=core.SecretValue.secrets_manager(secret))
         pipeline =  CodePipeline(self, "Pipeline", 
                         pipeline_name="MyPipeline",
                         synth=ShellStep("Synth", 
